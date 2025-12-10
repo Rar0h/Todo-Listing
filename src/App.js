@@ -1,35 +1,35 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import "./App.css";
 
 function App() {
-  let [inputValue, setInput] = useState("");
-  let olRef = useRef(null);
+  const [inputValue, setInput] = useState(""); // Состояние для ввода
+  const [tasks, setTasks] = useState([]); // Состояние для списка задач
 
   function addTask() {
-    if (inputValue === "") {
+    if (inputValue.trim() === "") {
       alert("Task name cannot be empty. Please enter a task.");
     } else {
-      const li = document.createElement("li");
-      const span = document.createElement("span");
-      span.innerText = `${inputValue}`;
-      li.appendChild(span);
-      olRef.current.appendChild(li);
-      const editBtn = document.createElement("button");
-      editBtn.innerText = "Edit";
-      li.appendChild(editBtn);
-      const deleteBtn = document.createElement("button");
-      deleteBtn.innerText = "Delete";
-      li.appendChild(deleteBtn);
+      const newTask = {
+        id: Date.now(), // Уникальный ID для каждой задачи
+        text: inputValue
+      };
+      setTasks([...tasks, newTask]); // Добавляем новую задачу
+      setInput(""); // Очищаем поле ввода
     }
-    setInput("");
   }
 
-  function handleTask(event) {
-    if (event.target.textContent === "Delete") {
-      event.target.parentNode.remove();
-    } else if (event.target.textContent === "Edit") {
-      const editedValue = prompt("Edit the task Name");
-      event.target.parentNode.childNodes[0].innerText = `${editedValue}`;
+  function deleteTask(id) {
+    // Удаляем задачу по ID
+    setTasks(tasks.filter(task => task.id !== id));
+  }
+
+  function editTask(id) {
+    const editedValue = prompt("Edit the task Name");
+    if (editedValue !== null && editedValue.trim() !== "") {
+      // Обновляем текст задачи
+      setTasks(tasks.map(task =>
+        task.id === id ? { ...task, text: editedValue } : task
+      ));
     }
   }
 
@@ -43,10 +43,24 @@ function App() {
           onChange={(event) => {
             setInput(event.target.value);
           }}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") {
+              addTask(); // Добавление по Enter
+            }
+          }}
         />
         <button onClick={addTask}>Задать</button>
       </div>
-      <ol className="list-container" ref={olRef} onClick={handleTask}></ol>
+      <ol className="list-container">
+        {/* Рендерим задачи через map */}
+        {tasks.map((task) => (
+          <li key={task.id}>
+            <span>{task.text}</span>
+            <button onClick={() => editTask(task.id)}>Edit</button>
+            <button onClick={() => deleteTask(task.id)}>Delete</button>
+          </li>
+        ))}
+      </ol>
     </div>
   );
 }
