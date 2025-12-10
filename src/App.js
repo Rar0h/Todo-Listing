@@ -35,7 +35,7 @@ function App() {
 
   return (
     <div className="container">
-      <h1 className="app-title">My To-Do List</h1>
+      <h1 className="app-title">Мой список задач</h1>
       <div className="todo-container">
         <input
           type="text"
@@ -44,7 +44,7 @@ function App() {
             setInput(event.target.value);
           }}
         />
-        <button onClick={addTask}>Submit</button>
+        <button onClick={addTask}>Задать</button>
       </div>
       <ol className="list-container" ref={olRef} onClick={handleTask}></ol>
     </div>
