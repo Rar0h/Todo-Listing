@@ -1,0 +1,26 @@
+{
+  "short_name": "Умный ToDo",
+  "name": "Умный офлайн-блокнот задач",
+  "description": "PWA для управления задачами с офлайн-синхронизацией. Магистерский проект по программной инженерии.",
+  "icons": [
+    {
+      "src": "pwa-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "pwa-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#000000",
+  "categories": ["productivity", "utilities"],
+  "orientation": "portrait-primary",
+  "scope": "/"
+}
